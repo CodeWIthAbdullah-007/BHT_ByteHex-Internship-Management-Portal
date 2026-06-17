@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ByteHex — Internship Management Portal</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+</head>
+<body class="hex-bg">
+
+<div id="login-screen" class="min-h-screen flex">
+  <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden flex-col justify-between p-12 border-r border-white/5">
+    <div class="float-hex" style="top:15%;left:10%;width:60px;height:60px;animation-delay:0s"></div>
+    <div class="float-hex" style="top:60%;left:20%;animation-delay:2s;width:80px;height:80px"></div>
+    <div class="float-hex" style="top:30%;right:15%;animation-delay:4s;width:50px;height:50px"></div>
+    <div class="float-hex" style="bottom:20%;right:25%;animation-delay:6s;width:70px;height:70px"></div>
+    
+    <div class="flex items-center gap-3 relative z-10">
+      <div class="brand-logo">B</div>
+      <div>
+        <div class="text-xl font-bold tracking-tight">ByteHex</div>
+        <div class="text-xs mono text-[var(--fg-d)]">INTERNSHIP.PORTAL.v2.4</div>
+      </div>
+    </div>
+    
+    <div class="relative z-10">
+      <div class="mono text-xs text-[var(--accent)] mb-4 tracking-widest">// COMMAND.INTERN.MANAGE</div>
+      <h1 class="text-5xl font-bold leading-tight mb-4">Ship interns<br><span class="text-[var(--accent)]">from day one</span>.</h1>
+      <p class="text-[var(--fg-m)] text-lg max-w-md">A unified workspace to register, track, and certify interns across every cohort. Real attendance, real performance, real outcomes.</p>
+    </div>
+    
+    <div class="grid grid-cols-3 gap-4 relative z-10">
+      <div class="glass rounded-xl p-4">
+        <div class="text-2xl font-bold text-[var(--accent)] mono" id="login-stat-1">0</div>
+        <div class="text-xs text-[var(--fg-m)] mt-1">Active Interns</div>
+      </div>
+      <div class="glass rounded-xl p-4">
+        <div class="text-2xl font-bold text-[var(--coral)] mono" id="login-stat-2">0</div>
+        <div class="text-xs text-[var(--fg-m)] mt-1">Open Tasks</div>
+      </div>
+      <div class="glass rounded-xl p-4">
+        <div class="text-2xl font-bold text-[var(--cyan)] mono" id="login-stat-3">0</div>
+        <div class="text-xs text-[var(--fg-m)] mt-1">Certificates</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12">
+    <div class="w-full max-w-md">
+      <div class="flex items-center gap-3 mb-8 lg:hidden">
+        <div class="brand-logo">B</div>
+        <div>
+          <div class="text-xl font-bold tracking-tight">ByteHex</div>
+          <div class="text-xs mono text-[var(--fg-d)]">INTERNSHIP.PORTAL</div>
+        </div>
+      </div>
+      
+      <div class="mb-8">
+        <div class="mono text-xs text-[var(--accent)] mb-2 tracking-widest">// AUTHENTICATE</div>
+        <h2 class="text-3xl font-bold mb-2">Welcome back</h2>
+        <p class="text-[var(--fg-m)]">Sign in to manage your intern cohort.</p>
+      </div>
+      
+      <form id="login-form" class="space-y-5">
+        <div>
+          <label class="block text-xs font-medium text-[var(--fg-m)] mb-2 uppercase tracking-wider">Email</label>
+          <div class="relative">
+            <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-[var(--fg-d)]"></i>
+            <input type="email" id="login-email" class="inp pl-11" placeholder="admin@bytehex.io" value="admin@bytehex.io" required>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-[var(--fg-m)] mb-2 uppercase tracking-wider">Password</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-[var(--fg-d)]"></i>
+            <input type="password" id="login-pass" class="inp pl-11 pr-11" placeholder="••••••••" value="admin123" required>
+            <button type="button" onclick="togglePass('login-pass',this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--fg-d)] hover:text-[var(--fg)]">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-sm">
+          <label class="flex items-center gap-2 cursor-pointer text-[var(--fg-m)]">
+            <input type="checkbox" class="accent-[var(--accent)]" checked>
+            <span>Keep me signed in</span>
+          </label>
+          <a href="#" class="text-[var(--accent)] hover:underline" onclick="event.preventDefault();toast('Demo portal — password reset not required.','info')">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary w-full py-3 text-base">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          Access Portal
+        </button>
+      </form>
+      
+      <div class="mt-6 glass rounded-xl p-4 text-sm">
+        <div class="flex items-center gap-2 text-[var(--fg-m)] mb-1">
+          <i class="fa-solid fa-circle-info text-[var(--accent)]"></i>
+          <span class="font-medium">Demo credentials</span>
+        </div>
+        <div class="mono text-xs text-[var(--fg-d)] pl-6">admin@bytehex.io · admin123</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="hidden-view min-h-screen">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+  
+  <aside class="sidebar w-64 flex-shrink-0 hex-bg border-r border-white/5 flex flex-col" id="sidebar">
+    <div class="p-5 border-b border-white/5">
+      <div class="flex items-center gap-3">
+        <div class="brand-logo">B</div>
+        <div>
+          <div class="text-lg font-bold tracking-tight">ByteHex</div>
+          <div class="text-[10px] mono text-[var(--fg-d)] tracking-wider">INTERNSHIP.PORTAL</div>
+        </div>
+      </div>
+    </div>
+    
+    <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+      <div class="text-[10px] uppercase tracking-widest text-[var(--fg-d)] px-3 py-2 mono">// Overview</div>
+      <div class="nav-link active" data-view="dashboard" onclick="switchView('dashboard')">
+        <i class="fa-solid fa-gauge-high"></i><span>Dashboard</span>
+      </div>
+      
+      <div class="text-[10px] uppercase tracking-widest text-[var(--fg-d)] px-3 py-2 mono mt-3">// Manage</div>
+      <div class="nav-link" data-view="interns" onclick="switchView('interns')">
+        <i class="fa-solid fa-users"></i><span>Interns</span>
+        <span class="ml-auto badge badge-accent mono" id="nav-intern-count">0</span>
+      </div>
+      <div class="nav-link" data-view="tasks" onclick="switchView('tasks')">
+        <i class="fa-solid fa-list-check"></i><span>Tasks</span>
+        <span class="ml-auto badge badge-warning mono" id="nav-task-count">0</span>
+      </div>
+      <div class="nav-link" data-view="attendance" onclick="switchView('attendance')">
+        <i class="fa-regular fa-calendar-check"></i><span>Attendance</span>
+      </div>
+      <div class="nav-link" data-view="performance" onclick="switchView('performance')">
+        <i class="fa-solid fa-chart-line"></i><span>Performance</span>
+      </div>
+      
+      <div class="text-[10px] uppercase tracking-widest text-[var(--fg-d)] px-3 py-2 mono mt-3">// Extras</div>
+      <div class="nav-link" data-view="announcements" onclick="switchView('announcements')">
+        <i class="fa-solid fa-bullhorn"></i><span>Announcements</span>
+        <span class="ml-auto badge badge-info mono" id="nav-ann-count">0</span>
+      </div>
+      <div class="nav-link" data-view="certificates" onclick="switchView('certificates')">
+        <i class="fa-solid fa-certificate"></i><span>Certificates</span>
+      </div>
+    </nav>
+    
+    <div class="p-3 border-t border-white/5">
+      <div class="glass rounded-xl p-3 flex items-center gap-3">
+        <div class="avatar w-9 h-9 bg-gradient-to-br from-[var(--accent)] to-[var(--accent-2)] text-[#0a0d18]">AD</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-medium truncate">Admin User</div>
+          <div class="text-xs text-[var(--fg-d)] truncate">admin@bytehex.io</div>
+        </div>
+        <button onclick="logout()" class="btn btn-ghost btn-icon" title="Logout">
+          <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+  
+  <div class="lg:ml-64 flex flex-col min-h-screen">
+    <header class="sticky top-0 z-30 glass border-b border-white/5 px-4 md:px-6 py-3 flex items-center gap-3">
+      <button class="lg:hidden btn btn-ghost btn-icon" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="flex-1 min-w-0">
+        <h1 class="text-lg md:text-xl font-bold" id="page-title">Dashboard</h1>
+        <p class="text-xs text-[var(--fg-m)] hidden md:block" id="page-subtitle">Real-time overview of your internship program</p>
+      </div>
+      <div class="hidden md:flex items-center gap-2 text-xs mono text-[var(--fg-d)] px-3 py-2 glass rounded-lg">
+        <i class="fa-regular fa-clock"></i>
+        <span id="header-time">--:--</span>
+      </div>
+      <button class="btn btn-ghost btn-icon relative" onclick="switchView('announcements')" title="Notifications">
+        <i class="fa-regular fa-bell"></i>
+        <span class="absolute top-1 right-1 w-2 h-2 bg-[var(--coral)] rounded-full"></span>
+      </button>
+      <button class="btn btn-primary" onclick="openInternModal()">
+        <i class="fa-solid fa-plus"></i>
+        <span class="hidden md:inline">Add Intern</span>
+      </button>
+    </header>
+    
+    <main class="flex-1 p-4 md:p-6 grid-bg">
+      
+      <section id="view-dashboard" class="view fade-in">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
+          <div class="glass stat-card rounded-2xl p-5 lift">
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-xl bg-[rgba(196,255,61,0.12)] flex items-center justify-center">
+                <i class="fa-solid fa-users text-[var(--accent)]"></i>
+              </div>
+              <span class="badge badge-success"><i class="fa-solid fa-arrow-up text-[9px]"></i>12%</span>
+            </div>
+            <div class="text-3xl font-bold mono" id="stat-total">0</div>
+            <div class="text-xs text-[var(--fg-m)] mt-1">Total Interns</div>
+          </div>
+          <div class="glass stat-card rounded-2xl p-5 lift">
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-xl bg-[rgba(96,165,250,0.12)] flex items-center justify-center">
+                <i class="fa-solid fa-user-check text-[var(--info)]"></i>
+              </div>
+              <span class="badge badge-info">Active</span>
+            </div>
+            <div class="text-3xl font-bold mono" id="stat-active">0</div>
+            <div class="text-xs text-[var(--fg-m)] mt-1">Currently Engaged</div>
+          </div>
+          <div class="glass stat-card rounded-2xl p-5 lift">
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-xl bg-[rgba(251,191,36,0.12)] flex items-center justify-center">
+                <i class="fa-solid fa-list-check text-[var(--warning)]"></i>
+              </div>
+              <span class="badge badge-warning">Open</span>
+            </div>
+            <div class="text-3xl font-bold mono" id="stat-tasks">0</div>
+            <div class="text-xs text-[var(--fg-m)] mt-1">Tasks In Progress</div>
+          </div>
+          <div class="glass stat-card rounded-2xl p-5 lift">
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-xl bg-[rgba(74,222,128,0.12)] flex items-center justify-center">
+                <i class="fa-solid fa-certificate text-[var(--success)]"></i>
+              </div>
+              <span class="badge badge-success">Issued</span>
+            </div>
+            <div class="text-3xl font-bold mono" id="stat-certs">0</div>
+            <div class="text-xs text-[var(--fg-m)] mt-1">Certificates Issued</div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
+          <div class="glass rounded-2xl p-5 lg:col-span-2">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-semibold">Department Distribution</h3>
+                <p class="text-xs text-[var(--fg-m)] mt-0.5">Interns across teams</p>
+              </div>
+              <div class="flex gap-2">
+                <span class="badge badge-accent">Live</span>
+              </div>
+            </div>
+            <div style="height:240px"><canvas id="chart-dept"></canvas></div>
+          </div>
+          <div class="glass rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-semibold">Status Breakdown</h3>
+                <p class="text-xs text-[var(--fg-m)] mt-0.5">Cohort health</p>
+              </div>
+            </div>
+            <div style="height:240px"><canvas id="chart-status"></canvas></div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+          <div class="glass rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-semibold">Task Completion</h3>
+                <p class="text-xs text-[var(--fg-m)] mt-0.5">Last 7 days</p>
+              </div>
+            </div>
+            <div style="height:200px"><canvas id="chart-tasks"></canvas></div>
+          </div>
+          <div class="glass rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-semibold">Attendance Rate</h3>
+                <p class="text-xs text-[var(--fg-m)] mt-0.5">Weekly avg</p>
+              </div>
+            </div>
+            <div style="height:200px"><canvas id="chart-attendance"></canvas></div>
+          </div>
+          <div class="glass rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <h3 class="font-semibold">Top Performers</h3>
+                <p class="text-xs text-[var(--fg-m)] mt-0.5">By score</p>
+              </div>
+            </div>
+            <div id="top-performers" class="space-y-2.5 max-h-[200px] overflow-y-auto pr-2"></div>
+          </div>
+        </div>
+      </section>
+      
+      <section id="view-interns" class="view hidden-view fade-in">
+        <div class="glass rounded-2xl p-4 md:p-5 mb-4">
+          <div class="flex flex-col md:flex-row md:items-center gap-3">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-[var(--fg-d)]"></i>
+              <input type="text" id="intern-search" class="inp pl-11" placeholder="Search by name, email, department, mentor..." oninput="renderInterns()">
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <select id="intern-filter-dept" class="inp w-auto" onchange="renderInterns()">
+                <option value="">All Departments</option>
+              </select>
+              <select id="intern-filter-status" class="inp w-auto" onchange="renderInterns()">
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="completed">Completed</option>
+                <option value="terminated">Terminated</option>
+              </select>
+              <button class="btn btn-primary" onclick="openInternModal()">
+                <i class="fa-solid fa-plus"></i><span class="hidden sm:inline">Register</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="rtable">
+              <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Department</th>
+                  <th>Mentor</th>
+                  <th>Duration</th>
+                  <th>Performance</th>
+                  <th>Status</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="intern-tbody"></tbody>
+            </table>
+          </div>
+          <div id="intern-empty" class="empty-state hidden-view">
+            <i class="fa-solid fa-users-slash text-4xl mb-3 text-[var(--fg-d)]"></i>
+            <p class="font-medium">No interns found</p>
+            <p class="text-sm mt-1">Try adjusting filters or register a new intern.</p>
+          </div>
+        </div>
+      </section>
+      
+      <section id="view-tasks" class="view hidden-view fade-in">
+        <div class="glass rounded-2xl p-4 md:p-5 mb-4">
+          <div class="flex flex-col md:flex-row md:items-center gap-3">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-[var(--fg-d)]"></i>
+              <input type="text" id="task-search" class="inp pl-11" placeholder="Search tasks..." oninput="renderTasks()">
+            </div>
+            <div class="flex gap-2 flex-wrap" id="task-tabs">
+              <div class="tab-pill active" data-filter="all" onclick="setTaskFilter('all')">All</div>
+              <div class="tab-pill" data-filter="pending" onclick="setTaskFilter('pending')">Pending</div>
+              <div class="tab-pill" data-filter="in-progress" onclick="setTaskFilter('in-progress')">In Progress</div>
+              <div class="tab-pill" data-filter="completed" onclick="setTaskFilter('completed')">Completed</div>
+              <button class="btn btn-primary ml-2" onclick="openTaskModal()">
+                <i class="fa-solid fa-plus"></i><span class="hidden sm:inline">Assign Task</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="task-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        <div id="task-empty" class="empty-state glass rounded-2xl hidden-view">
+          <i class="fa-solid fa-clipboard-list text-4xl mb-3 text-[var(--fg-d)]"></i>
+          <p class="font-medium">No tasks yet</p>
+          <p class="text-sm mt-1">Assign tasks to your interns to get started.</p>
+        </div>
+      </section>
+      
+      <section id="view-attendance" class="view hidden-view fade-in">
+        <div class="glass rounded-2xl p-4 md:p-5 mb-4">
+          <div class="flex flex-col md:flex-row md:items-center gap-3">
+            <div class="flex-1">
+              <label class="block text-xs font-medium text-[var(--fg-m)] mb-2 uppercase tracking-wider">Date</label>
+              <input type="date" id="attendance-date" class="inp" onchange="renderAttendance()">
+            </div>
+            <div class="flex items-end gap-2">
+              <button class="btn btn-ghost" onclick="markAllPresent()">
+                <i class="fa-solid fa-check-double"></i><span class="hidden sm:inline">Mark All Present</span>
+              </button>
+              <button class="btn btn-primary" onclick="saveAttendance()">
+                <i class="fa-solid fa-floppy-disk"></i><span class="hidden sm:inline">Save</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+          <div class="glass rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-[var(--success)] mono" id="att-present">0</div>
+            <div class="text-xs text-[var(--fg-m)] mt-1">Present</div>
+          </div>
+          <div class="glass rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-[var(--warning)] mono" id="att-late">0</div>
+            <div class="text-xs text-[var(--fg-m)] mt-1">Late</div>
+          </div>
+          <div class="glass rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-[var(--danger)] mono" id="att-absent">0</div>
+            <div class="text-xs text-[var(--fg-m)] mt-1">Absent</div>
+          </div>
+          <div class="glass rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-[var(--info)] mono" id="att-leave">0</div>
+            <div class="text-xs text-[var(--fg-m)] mt-1">On Leave</div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="rtable">
+              <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                </tr>
+              </thead>
+              <tbody id="attendance-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      
+      <section id="view-performance" class="view hidden-view fade-in">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6">
+          <div class="glass rounded-2xl p-5">
+            <h3 class="font-semibold mb-1">Performance Distribution</h3>
+            <p class="text-xs text-[var(--fg-m)] mb-4">Score ranges across interns</p>
+            <div style="height:260px"><canvas id="chart-perf-dist"></canvas></div>
+          </div>
+          <div class="glass rounded-2xl p-5">
+            <h3 class="font-semibold mb-1">Department Average</h3>
+            <p class="text-xs text-[var(--fg-m)] mb-4">Mean performance by team</p>
+            <div style="height:260px"><canvas id="chart-perf-dept"></canvas></div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="rtable">
+              <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Department</th>
+                  <th>Tasks</th>
+                  <th>Attendance</th>
+                  <th>Performance</th>
+                  <th>Rating</th>
+                </tr>
+              </thead>
+              <tbody id="performance-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      
+      <section id="view-announcements" class="view hidden-view fade-in">
+        <div class="glass rounded-2xl p-4 md:p-5 mb-4 flex flex-col md:flex-row md:items-center gap-3">
+          <div class="flex-1">
+            <h3 class="font-semibold">Broadcast Center</h3>
+            <p class="text-xs text-[var(--fg-m)] mt-0.5">Post announcements visible to all interns</p>
+          </div>
+          <button class="btn btn-primary" onclick="openAnnouncementModal()">
+            <i class="fa-solid fa-plus"></i><span class="hidden sm:inline">New Announcement</span>
+          </button>
+        </div>
+        <div id="announcement-list" class="space-y-3"></div>
+        <div id="announcement-empty" class="empty-state glass rounded-2xl hidden-view">
+          <i class="fa-solid fa-bullhorn text-4xl mb-3 text-[var(--fg-d)]"></i>
+          <p class="font-medium">No announcements</p>
+          <p class="text-sm mt-1">Post your first announcement to broadcast updates.</p>
+        </div>
+      </section>
+      
+      <section id="view-certificates" class="view hidden-view fade-in">
+        <div class="glass rounded-2xl p-4 md:p-5 mb-4 flex flex-col md:flex-row md:items-center gap-3">
+          <div class="flex-1">
+            <h3 class="font-semibold">Certificate Tracker</h3>
+            <p class="text-xs text-[var(--fg-m)] mt-0.5">Issue and track completion certificates</p>
+          </div>
+          <button class="btn btn-primary" onclick="openCertificateModal()">
+            <i class="fa-solid fa-plus"></i><span class="hidden sm:inline">Issue Certificate</span>
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+          <div class="glass rounded-xl p-4">
+            <div class="text-xs text-[var(--fg-m)] mb-1">Total</div>
+            <div class="text-2xl font-bold mono" id="cert-total">0</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-xs text-[var(--fg-m)] mb-1">Issued</div>
+            <div class="text-2xl font-bold mono text-[var(--success)]" id="cert-issued">0</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-xs text-[var(--fg-m)] mb-1">Pending</div>
+            <div class="text-2xl font-bold mono text-[var(--warning)]" id="cert-pending">0</div>
+          </div>
+          <div class="glass rounded-xl p-4">
+            <div class="text-xs text-[var(--fg-m)] mb-1">Revoked</div>
+            <div class="text-2xl font-bold mono text-[var(--danger)]" id="cert-revoked">0</div>
+          </div>
+        </div>
+        
+        <div class="glass rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="rtable">
+              <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Type</th>
+                  <th>Issue Date</th>
+                  <th>Score</th>
+                  <th>Status</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="certificate-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      
+    </main>
+  </div>
+</div>
+
+<div class="toast-c" id="toast-container"></div>
+
+<div id="modal-root"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
